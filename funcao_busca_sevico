@@ -1,0 +1,53 @@
+void busca_por_servico (Lista_func* lis, Fila_atend* fila, Vet_serv* v){
+    Lista_func* p;
+    Lista_atend* f;
+    int cod_serv, cod_func;
+    int i, j, op;          //i e j contadores do for; op guarda a opcao do cliente de entrar na fila ou nao
+    float t;        //tempo de aprox de espera
+    char nome_cliente[40];
+
+    printf("Digite o codigo do servico:\n");
+    scanf("%d", &cod_serv);
+
+    printf("Funcionario:\t\tTempo estimado de espera:\n");      //Cabecalho da tabela
+
+    //Busca por servico
+
+    for (i=0, i<MAX_SERV; i++){                 //Armazenando em i o campo do vetor servicos que corresponde ao servico desejado
+        if (v[i]->cod == cod_serv)
+            break;      //aqui ele não incrementa mais o i, nao eh??
+    }
+
+    //for que percorre a lista de funcionarios
+    for (p=lis ; p!=NULL; p=p->prox){
+        t=0;
+        for (f=fila->ini ; f!=NULL ; f=f->prox ){   //Armazena em t o tempo de espera para este funcionario
+            if ( f->cod_funcionario == p->cod ){
+                t+=v[i]->tempo;
+            }
+        }
+        for (j=0; j<MAX_SERV; j++){             //Percorre o vetor servicos do funcionario, verificando se este realiza o servico buscado. Caso sim, ele ja imprime na tela o nome e o tempo de espera
+            if (p->vetor_servicos[j] == cod_serv){
+                printf("%s\t\t%f\n",p->nome,t);
+            }
+        }
+    }
+
+    do {
+        printf("\n\nDeseja realizar algum servico? 1-SIM 0-NAO\n");
+        scanf("%d",&op);
+    } while (op!=1 || op!=0);
+
+    if (op == 0){
+        printf("\nObrigado! Volte Sempre!\n");
+        system("cls");
+    }
+    else if (op == 1) {
+        printf("Digite o codigo do funcionario:\n");
+        scanf("%d",%cod_func);
+        printf("Digite o nome do cliente:\n");
+        scanf(" %s", nome_cliente);
+        fila_atend_insere(fila, nome_cliente, cod_serv, cod_func);
+    }
+
+}
